@@ -61,7 +61,7 @@ DELETE  http://localhost:3000/cards/62e19d3743cb848c2b96aba7/likes
 PUT http://localhost:3000/cards/62e19d3743cb848c2b96aba7/likes
 
 ###
-POST http://api.mesto.nn.nomoredomains.sbs/signup
+POST http://api.mesto.nn.nomoredomains.sbs/signin
 Content-Type: application/json
 
 {
