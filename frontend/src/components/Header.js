@@ -12,7 +12,7 @@ function Header({ location, isLoggedIn, goTo }) {
           ? "Выйти"
           : location === "/sign-up"
           ? "Войти"
-          : "Регистрация"}
+          : "егистрация"}
       </button>
     </header>
   );
