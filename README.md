@@ -9,6 +9,6 @@
 
 ## Демо
 
-Открыть приложение в браузере: mesto.nn.nomoredomains.sbs 
+Открыть приложение в браузере: https://mesto.nn.nomoredomains.sbs
 
 
