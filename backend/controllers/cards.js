@@ -10,11 +10,19 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send(card))
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'ValidationError') {
+        const err = new Error('Некорректные данные при создании карточки');
+        err.statusCode = 400;
+        next(err);
+      } else {
+        next(error);
+      }
+    });
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.id)
+  Card.findById(req.params.id)
     .orFail()
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
@@ -22,15 +30,17 @@ module.exports.deleteCard = (req, res, next) => {
         err.statusCode = 403;
         next(err);
       }
-      return res.send(card);
+      return card.remove()
+        .then(() => res.send({ massege: 'Карточка удалена' }));
     })
     .catch((error) => {
       if (error.name === 'DocumentNotFoundError') {
         const err = new Error('Пользователь не найден');
         err.statusCode = 404;
         next(err);
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 
@@ -48,8 +58,9 @@ module.exports.likeCard = (req, res, next) => {
         const err = new Error('Пользователь не найден');
         err.statusCode = 404;
         next(err);
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 
@@ -66,7 +77,8 @@ module.exports.dislikeCard = (req, res, next) => {
         const err = new Error('Пользователь не найден');
         err.statusCode = 404;
         next(err);
+      } else {
+        next(error);
       }
-      next(error);
     });
 };

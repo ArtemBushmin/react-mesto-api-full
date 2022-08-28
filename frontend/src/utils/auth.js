@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.mesto.nn.nomoredomains.sbs';
+export const BASE_URL = 'https://api.mesto.nn.nomoredomains.sbs';
 
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка ${Response.status}`);

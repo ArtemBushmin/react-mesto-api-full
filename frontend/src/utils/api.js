@@ -76,7 +76,7 @@ class Api {
 }
 
 export const api = new Api({
-  url: "http://api.mesto.nn.nomoredomains.sbs/",
+  url: "https://api.mesto.nn.nomoredomains.sbs/",
   headers: {
     "content-type": "application/json",
   },

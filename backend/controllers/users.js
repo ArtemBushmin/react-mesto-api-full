@@ -19,8 +19,9 @@ module.exports.getUserById = (req, res, next) => {
         const err = new Error('Пользователь не найден');
         err.statusCode = 404;
         next(err);
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 
@@ -29,7 +30,15 @@ module.exports.getUserInfo = (req, res, next) => {
     .then((user) => {
       res.send(user);
     })
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'DocumentNotFoundError') {
+        const err = new Error('Информация о пользователе не найдена');
+        err.statusCode = 404;
+        next(err);
+      } else {
+        next(error);
+      }
+    });
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -43,12 +52,18 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => User.findOne({ _id: user._id }))
     .then((user) => res.send(user))
     .catch((error) => {
+      if (error.name === 'ValidationError') {
+        const err = new Error('Некорректные данные при создании пользователя');
+        err.statusCode = 400;
+        next(err);
+      }
       if (error.code === 11000) {
         const err = new Error('Пользователь с таким email уже существует');
         err.statusCode = 409;
         next(err);
+      } else {
+        next(error);
       }
-      next(error);
     });
 };
 
@@ -57,7 +72,15 @@ module.exports.updateUserProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail()
     .then((user) => res.send(user))
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'ValidationError') {
+        const err = new Error('Некорректные данные при обновлении пользователя');
+        err.statusCode = 400;
+        next(err);
+      } else {
+        next(error);
+      }
+    });
 };
 
 module.exports.updateUserAvatar = (req, res, next) => {
@@ -65,7 +88,15 @@ module.exports.updateUserAvatar = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail()
     .then((user) => res.send(user))
-    .catch(next);
+    .catch((error) => {
+      if (error.name === 'ValidationError') {
+        const err = new Error('Некорректные данные при обновлении аватара');
+        err.statusCode = 400;
+        next(err);
+      } else {
+        next(error);
+      }
+    });
 };
 
 module.exports.login = (req, res, next) => {

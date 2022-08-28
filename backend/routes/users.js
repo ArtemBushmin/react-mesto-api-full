@@ -37,7 +37,7 @@ userRoutes.patch(
     body: Joi.object().keys({
       avatar: Joi.string()
         .required()
-        .regex(/https?:\/\/(www\.)?[0-9a-z\-._~:/?#[\]@!$&'()*+,;=]+#?$/i),
+        .regex(/https?:\/\/(www\.)?[a-zA-Z\d\-.]{1,}\.[a-z]{1,6}([/a-z0-9\-._~:?#[\]@!$&'()*+,;=]*)/),
     }),
   }),
   updateUserAvatar,
