@@ -9,8 +9,6 @@
 
 ## Демо
 
-Открыть приложение в браузере: https://mesto.nn.nomoredomains.sbs
-Домен сервера: https://api.mesto.nn.nomoredomains.sbs
+Открыть приложение в браузере: https://mesto.nn.nomoredomains.sbs  
+Домен сервера: https://api.mesto.nn.nomoredomains.sbs  
 Публичный IP адрес: 51.250.15.243
-
-
