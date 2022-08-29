@@ -28,7 +28,7 @@ module.exports.deleteCard = (req, res, next) => {
       if (!card.owner.equals(req.user._id)) {
         const err = new Error('Нет возможности удалить карту другого пользователя');
         err.statusCode = 403;
-        next(err);
+        return next(err);
       }
       return card.remove()
         .then(() => res.send({ massege: 'Карточка удалена' }));
